@@ -15,15 +15,20 @@
         <span id="month-total-etc" style="font-size:1.4rem; font-weight:bold; color:#0284c7;">0</span> 円
     </div>
 
+    <!-- 料金検索リンク（ここに追加しました） -->
+    <div style="margin-bottom:10px; text-align:right;">
+        <a href="https://driveplaza.com" target="_blank" style="color:#0284c7; text-decoration:none; font-weight:bold; font-size:0.95rem;">🌐 公式料金検索を開く (ドラぷら)</a>
+    </div>
+
     <!-- 入力フォーム -->
     <form onsubmit="saveData(event)" style="background:#f8fafc; padding:15px; border:1px solid #cbd5e1; border-radius:5px;">
-        <p style="margin-top:0;">利用日時:<br><input type="datetime-local" id="etc-date" required style="width:100%; padding:5px;"></p>
-        <p>入口IC:<br><input type="text" id="entry-ic" placeholder="例：東京" required style="width:100%; padding:5px;"></p>
-        <p>出口IC:<br><input type="text" id="exit-ic" placeholder="例：横浜" required style="width:100%; padding:5px;"></p>
-        <p>ETC料金（円）:<br><input type="number" id="etc-price" placeholder="例：1200" min="0" required style="width:100%; padding:5px;"></p>
-        <p>メモ（任意）:<br><input type="text" id="etc-memo" placeholder="仕事、旅行など" style="width:100%; padding:5px;"></p>
+        <p style="margin-top:0;">利用日時:<br><input type="datetime-local" id="etc-date" required style="width:100%; padding:5px; box-sizing:border-box;"></p>
+        <p>入口IC:<br><input type="text" id="entry-ic" placeholder="例：東京" required style="width:100%; padding:5px; box-sizing:border-box;"></p>
+        <p>出口IC:<br><input type="text" id="exit-ic" placeholder="例：横浜" required style="width:100%; padding:5px; box-sizing:border-box;"></p>
+        <p>ETC料金（円）:<br><input type="number" id="etc-price" placeholder="例：1200" min="0" required style="width:100%; padding:5px; box-sizing:border-box;"></p>
+        <p>メモ（任意）:<br><input type="text" id="etc-memo" placeholder="仕事、旅行など" style="width:100%; padding:5px; box-sizing:border-box;"></p>
         
-        <button type="submit" style="width:100%; padding:10px; background:#0284c7; color:white; border:none; border-radius:5px; font-weight:bold;">記録を保存する</button>
+        <button type="submit" style="width:100%; padding:10px; background:#0284c7; color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">記録を保存する</button>
     </form>
 
     <!-- 履歴一覧 -->
@@ -36,7 +41,6 @@
 
     window.onload = function() {
         const today = new Date();
-        // 日本時間に合わせた初期値設定
         const offset = today.getTimezoneOffset() * 60000;
         const localISOTime = (new Date(today - offset)).toISOString().slice(0,16);
         document.getElementById('etc-date').value = localISOTime;
@@ -67,7 +71,6 @@
 
         localStorage.setItem('etc_highway_records', JSON.stringify(etcRecords));
         
-        // フォームをリセット
         document.getElementById('entry-ic').value = "";
         document.getElementById('exit-ic').value = "";
         document.getElementById('etc-price').value = "";
@@ -85,7 +88,6 @@
         
         let monthTotal = 0;
 
-        // 日時の新しい順にソートしてループ
         [...etcRecords].sort((a,b) => b.date.localeCompare(a.date)).forEach(r => {
             const rMonth = r.date.slice(0, 7);
             
@@ -120,4 +122,3 @@
 </script>
 </body>
 </html>
-
